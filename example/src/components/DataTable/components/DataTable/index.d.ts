@@ -4,15 +4,36 @@ export declare type DataTableColumn<T> = {
     label: string | JSX.Element;
     accessor: DataTableAccessor<T>;
     ordinal?: boolean;
+    sortable?: boolean;
+};
+export declare type DataTableFilter = {
+    column: string;
+    operator: string;
+    value: string | number;
 };
 export declare type DataTableAction<T> = {
-    icon: string;
-    href: DataTableAccessor<T>;
+    icon: string | JSX.Element;
+    href?: DataTableAccessor<T>;
+    onClick?(): void;
 };
-export declare type DataTablePagination = {};
+export declare type DataTablePagination = {
+    page: number;
+    pageSize: number;
+    total: number;
+};
+export declare type DataTableApiCallParams = {
+    [key: string]: string | number;
+};
+export declare type DataProvider<T> = {
+    call: (params: DataTableApiCallParams) => Promise<T>;
+    dataPath: string;
+    paginationPath: string;
+};
 export interface IDataTable<T> {
-    actions: DataTableAction<T>[];
+    actions?: DataTableAction<T>[];
     columns: DataTableColumn<T>[];
+    filters?: DataTableFilter[];
     pagination?: DataTablePagination;
+    provider: T[] | DataProvider<T>;
 }
-export declare function DataTable<T>({ actions, pagination, columns, }: IDataTable<T>): JSX.Element;
+export declare function DataTable<T>({ actions, pagination, columns, filters, provider, }: IDataTable<T>): JSX.Element;

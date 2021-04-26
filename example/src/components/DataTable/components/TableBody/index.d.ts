@@ -1,4 +1,2 @@
-export interface ITableBody<T> {
-}
-declare function TableBody<T>({}: ITableBody<T>): JSX.Element;
+declare function TableBody<T>(): JSX.Element;
 export default TableBody;

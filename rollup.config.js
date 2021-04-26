@@ -1,6 +1,7 @@
 import typescript from 'rollup-plugin-typescript2';
 import del from 'rollup-plugin-delete';
 import postcss from 'rollup-plugin-postcss';
+import svg from 'rollup-plugin-svg'
 import pkg from './package.json';
 
 export default [
@@ -17,6 +18,9 @@ export default [
     ],
     plugins: [
       del({ targets: ['dist/*', 'example/src/components/DataTable'] }),
+      svg({
+        base64: true
+      }),
       postcss({
         extract: false,
         modules: true,
