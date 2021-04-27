@@ -5,3 +5,4 @@
 - Actions
 - Filters
 - Caching
+- Styles provider
