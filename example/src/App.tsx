@@ -1,41 +1,55 @@
 import React from 'react'
+import { getProductsIndex } from './api/products'
 import { DataTable } from './components/DataTable'
-import { DataTableColumn } from './components/DataTable/components/DataTable'
+import { DataTableColumn } from './components/DataTable/components/DataTable/DataTable'
+import Pill from './components/Pill'
 
-export interface IUser {
-  email: string
-  profile: {
-    first_name: string
-    last_name: string
-  }
+export type ProductCondition = 'new' | 'used'
+
+export interface IProduct {
+  name: string
+  ean: string
+  price: number
+  currency: string
+  quantity: number
+  condition: ProductCondition
 }
 
-const data: IUser[] = [
+const columns: DataTableColumn<IProduct>[] = [
   {
-    email: 'mmstaniewski@gmail.com',
-    profile: {
-      first_name: 'Michał',
-      last_name: 'Staniewski',
-    },
-  },
-]
-
-const columns: DataTableColumn<IUser>[] = [
-  {
-    label: 'Email',
-    accessor: 'email',
-    sortable: true,
+    label: 'Product name',
+    accessor: 'name',
   },
   {
-    label: 'Full name',
-    accessor: ({ profile }) => `${profile.first_name} ${profile.last_name}`,
+    label: 'EAN',
+    accessor: 'ean',
+  },
+  {
+    label: 'Price',
+    accessor: ({ price, currency }) => `${price} ${currency}`,
+  },
+  {
+    label: 'Quantity',
+    accessor: 'quantity',
+  },
+  {
+    label: 'Condition',
+    accessor: ({ condition }) => <Pill value={condition} />,
   },
 ]
 
 function App() {
   return (
     <div className="App">
-      <DataTable<IUser> actions={[]} columns={columns} provider={data} />
+      <DataTable<IProduct>
+        actions={[]}
+        columns={columns}
+        provider={{
+          call: getProductsIndex,
+          dataPath: 'payload',
+          paginationPath: 'pagination',
+        }}
+      />
     </div>
   )
 }

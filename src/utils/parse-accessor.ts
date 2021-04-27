@@ -1,9 +1,6 @@
-import { DataTableAccessor } from 'src/components/DataTable'
+import { DataTableAccessor } from 'src/components/DataTable/DataTable'
 
-export default function <T>(
-  accessor: DataTableAccessor<T>,
-  row: T
-): string | number {
+export default function <T>(accessor: DataTableAccessor<T>, row: T) {
   if (typeof accessor === 'function') {
     return accessor(row)
   } else {

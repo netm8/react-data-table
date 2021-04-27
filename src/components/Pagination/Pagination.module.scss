@@ -1,0 +1,31 @@
+.Pagination {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 12px;
+  margin: 12px 0;
+  padding: 0;
+
+  &Item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border: #e2e2e2 1px solid;
+    font-size: 12px;
+    margin: 0 6px;
+    cursor: pointer;
+  }
+
+  &ItemActive {
+    background-color: #e2e2e2;
+  }
+
+  &ItemSeparator {
+    border: none;
+  }
+
+  &Separator {
+    padding: 0 20px;
+  }
+}

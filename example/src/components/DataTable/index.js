@@ -1,5 +1,7 @@
 /* eslint-disable */
 import React, { createContext, Component, useContext } from 'react';
+import deepEqual from 'deep-equal';
+import cs from 'classnames';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -31,6 +33,17 @@ function __extends(d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -70,86 +83,6 @@ function __generator(thisArg, body) {
     }
 }
 
-var initialState = {
-    data: [],
-    columns: [],
-    actions: [],
-    filters: [],
-    pagination: {
-        page: 1,
-        pageSize: 10,
-        total: 0,
-    },
-};
-var DataTableContext = createContext(initialState);
-var Provider = /** @class */ (function (_super) {
-    __extends(Provider, _super);
-    function Provider(props) {
-        var _this = _super.call(this, props) || this;
-        _this.state = {
-            data: [],
-            actions: props.actions,
-            columns: props.columns,
-            filters: props.filters,
-            pagination: props.pagination,
-        };
-        _this.provider = props.provider;
-        _this.loadData = _this.loadData.bind(_this);
-        _this.createParams = _this.createParams.bind(_this);
-        return _this;
-    }
-    Provider.prototype.componentDidMount = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                this.loadData();
-                return [2 /*return*/];
-            });
-        });
-    };
-    Provider.prototype.createParams = function () {
-        return {};
-    };
-    Provider.prototype.loadData = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var params;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        // Collection provided. No API Call needed
-                        if (Array.isArray(this.provider)) {
-                            this.setState({ data: this.provider });
-                            return [2 /*return*/];
-                        }
-                        params = this.createParams();
-                        return [4 /*yield*/, this.provider.call(params)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Provider.prototype.render = function () {
-        return (React.createElement(DataTableContext.Provider, { value: this.state }, this.props.children));
-    };
-    return Provider;
-}(Component));
-
-var sort = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDQwMS45OTggNDAxLjk5OCI+CiAgPHBhdGggZmlsbD0iI2M5YzljOSIgZD0iTTczLjA5MiAxNjQuNDUyaDI1NS44MTNjNC45NDkgMCA5LjIzMy0xLjgwNyAxMi44NDgtNS40MjQgMy42MTMtMy42MTYgNS40MjctNy44OTggNS40MjctMTIuODQ3cy0xLjgxMy05LjIyOS01LjQyNy0xMi44NUwyMTMuODQ2IDUuNDI0QzIxMC4yMzIgMS44MTIgMjA1Ljk1MSAwIDIwMC45OTkgMHMtOS4yMzMgMS44MTItMTIuODUgNS40MjRMNjAuMjQyIDEzMy4zMzFjLTMuNjE3IDMuNjE3LTUuNDI0IDcuOTAxLTUuNDI0IDEyLjg1IDAgNC45NDggMS44MDcgOS4yMzEgNS40MjQgMTIuODQ3IDMuNjIxIDMuNjE3IDcuOTAyIDUuNDI0IDEyLjg1IDUuNDI0ek0zMjguOTA1IDIzNy41NDlINzMuMDkyYy00Ljk1MiAwLTkuMjMzIDEuODA4LTEyLjg1IDUuNDIxLTMuNjE3IDMuNjE3LTUuNDI0IDcuODk4LTUuNDI0IDEyLjg0N3MxLjgwNyA5LjIzMyA1LjQyNCAxMi44NDhMMTg4LjE0OSAzOTYuNTdjMy42MjEgMy42MTcgNy45MDIgNS40MjggMTIuODUgNS40MjhzOS4yMzMtMS44MTEgMTIuODQ3LTUuNDI4bDEyNy45MDctMTI3LjkwNmMzLjYxMy0zLjYxNCA1LjQyNy03Ljg5OCA1LjQyNy0xMi44NDggMC00Ljk0OC0xLjgxMy05LjIyOS01LjQyNy0xMi44NDctMy42MTQtMy42MTYtNy44OTktNS40Mi0xMi44NDgtNS40MnoiLz4KPC9zdmc+';
-
-function mapColumnsToCells(columns) {
-    return columns.map(function (column, idx) { return (React.createElement("th", { key: column.label + "." + idx },
-        column.label,
-        column.sortable && React.createElement("img", { src: sort }))); });
-}
-function TableHead() {
-    var _a = useContext(DataTableContext), columns = _a.columns, actions = _a.actions;
-    return (React.createElement("thead", null,
-        React.createElement("tr", null,
-            mapColumnsToCells(columns),
-            actions && React.createElement("th", null, "Actions"))));
-}
-
 function parseAccessor (accessor, row) {
     if (typeof accessor === 'function') {
         return accessor(row);
@@ -170,25 +103,137 @@ function parseAccessor (accessor, row) {
     }
 }
 
-function mapColumnsToRows(columns, data) {
-    return data.map(function (row, rowIdx) { return (React.createElement("tr", { key: rowIdx }, columns.map(function (column, columnIdx) {
-        var accessor = column.accessor;
-        var data = parseAccessor(accessor, row);
-        return React.createElement("td", { key: rowIdx + "." + columnIdx }, data);
-    }))); });
-}
-function TableBody() {
-    var _a = useContext(DataTableContext), data = _a.data, columns = _a.columns;
-    return React.createElement("tbody", null, mapColumnsToRows(columns, data));
-}
-
-function TableFoot(_a) {
-    return (React.createElement("tfoot", null));
-}
-
-var Pagination = function () {
-    return (React.createElement("ul", null));
+var initialState = {
+    data: [],
+    columns: [],
+    actions: [],
+    appliedFilters: [],
+    filters: [],
+    pagination: {
+        page: 1,
+        pageSize: 100,
+        pagesCount: 0,
+        total: 0,
+    },
+    handlers: {
+        setPage: function () { },
+        setFilters: function () { },
+    },
 };
+var DataTableContext = createContext(initialState);
+var Provider = /** @class */ (function (_super) {
+    __extends(Provider, _super);
+    function Provider(props) {
+        var _this = _super.call(this, props) || this;
+        _this.loadData = _this.loadData.bind(_this);
+        _this.createParams = _this.createParams.bind(_this);
+        _this.setFilters = _this.setFilters.bind(_this);
+        _this.setPage = _this.setPage.bind(_this);
+        _this.state = {
+            data: [],
+            appliedFilters: [],
+            filters: props.filters,
+            actions: props.actions,
+            columns: props.columns,
+            pagination: props.pagination,
+            handlers: {
+                setPage: _this.setPage,
+                setFilters: _this.setFilters,
+            },
+        };
+        _this.provider = props.provider;
+        return _this;
+    }
+    Provider.prototype.componentDidMount = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.loadData()];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        _a.sent();
+                        console.error('Failed to fetch data');
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Provider.prototype.componentDidUpdate = function (prevProps, prevState) {
+        return __awaiter(this, void 0, void 0, function () {
+            var hasFiltersChanged;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        hasFiltersChanged = !deepEqual(prevState.appliedFilters, this.state.appliedFilters) ||
+                            !deepEqual(prevState.pagination, this.state.pagination);
+                        if (!hasFiltersChanged)
+                            return [2 /*return*/];
+                        return [4 /*yield*/, this.loadData()];
+                    case 1:
+                        _a.sent();
+                        window.scrollTo(0, 0);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        _a.sent();
+                        console.error('Failed to fetch data');
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Provider.prototype.createParams = function () {
+        // To be implemented
+        // const filters = this.state.filters?.reduce((params, filter) => {}, {})
+        var _a, _b;
+        return {
+            page: ((_a = this.state.pagination) === null || _a === void 0 ? void 0 : _a.page) || 1,
+            pageSize: ((_b = this.state.pagination) === null || _b === void 0 ? void 0 : _b.pageSize) || 20,
+        };
+    };
+    Provider.prototype.setPage = function (page) {
+        if (!this.state.pagination)
+            return;
+        this.setState({
+            pagination: __assign(__assign({}, this.state.pagination), { page: page }),
+        });
+    };
+    Provider.prototype.setFilters = function (filters) { };
+    Provider.prototype.loadData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var params, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        // Collection provided. No API Call needed
+                        if (Array.isArray(this.provider)) {
+                            this.setState({ data: this.provider });
+                            return [2 /*return*/];
+                        }
+                        params = this.createParams();
+                        return [4 /*yield*/, this.provider.call(params)];
+                    case 1:
+                        response = _a.sent();
+                        this.setState({
+                            data: parseAccessor(this.provider.dataPath, response),
+                            pagination: parseAccessor(this.provider.paginationPath, response),
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Provider.prototype.render = function () {
+        return (React.createElement(DataTableContext.Provider, { value: this.state }, this.props.children));
+    };
+    return Provider;
+}(Component));
 
 function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
@@ -217,19 +262,100 @@ function styleInject(css, ref) {
   }
 }
 
+var css_248z$3 = ".TableHead-module_TableHeadCell__6tJMl {\n  text-align: left;\n  padding: 12px 0;\n  border-bottom: 2px solid #e2e2e2; }\n";
+var styles$3 = {"TableHeadCell":"TableHead-module_TableHeadCell__6tJMl"};
+styleInject(css_248z$3);
+
+var sort = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDQwMS45OTggNDAxLjk5OCI+CiAgPHBhdGggZmlsbD0iI2M5YzljOSIgZD0iTTczLjA5MiAxNjQuNDUyaDI1NS44MTNjNC45NDkgMCA5LjIzMy0xLjgwNyAxMi44NDgtNS40MjQgMy42MTMtMy42MTYgNS40MjctNy44OTggNS40MjctMTIuODQ3cy0xLjgxMy05LjIyOS01LjQyNy0xMi44NUwyMTMuODQ2IDUuNDI0QzIxMC4yMzIgMS44MTIgMjA1Ljk1MSAwIDIwMC45OTkgMHMtOS4yMzMgMS44MTItMTIuODUgNS40MjRMNjAuMjQyIDEzMy4zMzFjLTMuNjE3IDMuNjE3LTUuNDI0IDcuOTAxLTUuNDI0IDEyLjg1IDAgNC45NDggMS44MDcgOS4yMzEgNS40MjQgMTIuODQ3IDMuNjIxIDMuNjE3IDcuOTAyIDUuNDI0IDEyLjg1IDUuNDI0ek0zMjguOTA1IDIzNy41NDlINzMuMDkyYy00Ljk1MiAwLTkuMjMzIDEuODA4LTEyLjg1IDUuNDIxLTMuNjE3IDMuNjE3LTUuNDI0IDcuODk4LTUuNDI0IDEyLjg0N3MxLjgwNyA5LjIzMyA1LjQyNCAxMi44NDhMMTg4LjE0OSAzOTYuNTdjMy42MjEgMy42MTcgNy45MDIgNS40MjggMTIuODUgNS40MjhzOS4yMzMtMS44MTEgMTIuODQ3LTUuNDI4bDEyNy45MDctMTI3LjkwNmMzLjYxMy0zLjYxNCA1LjQyNy03Ljg5OCA1LjQyNy0xMi44NDggMC00Ljk0OC0xLjgxMy05LjIyOS01LjQyNy0xMi44NDctMy42MTQtMy42MTYtNy44OTktNS40Mi0xMi44NDgtNS40MnoiLz4KPC9zdmc+';
+
+function mapColumnsToCells(columns) {
+    return columns.map(function (column, idx) { return (React.createElement("th", { className: styles$3.TableHeadCell, key: column.label + "." + idx },
+        column.ordinal ? '#' : column.label,
+        column.sortable && React.createElement("img", { src: sort }))); });
+}
+function TableHead() {
+    var _a = useContext(DataTableContext), columns = _a.columns, actions = _a.actions;
+    return (React.createElement("thead", null,
+        React.createElement("tr", null,
+            mapColumnsToCells(columns),
+            actions && React.createElement("th", { className: styles$3.TableHeadCell }, "Actions"))));
+}
+
+var css_248z$2 = ".TableBody-module_TableBodyCell__gC939 {\n  padding: 8px 0;\n  border-bottom: 1px solid #e2e2e2; }\n";
+var styles$2 = {"TableBodyCell":"TableBody-module_TableBodyCell__gC939"};
+styleInject(css_248z$2);
+
+function mapColumnsToRows(columns, data, actions) {
+    return data.map(function (row, rowIdx) { return (React.createElement("tr", { key: rowIdx },
+        columns.map(function (column, columnIdx) {
+            var accessor = column.accessor;
+            var data = parseAccessor(accessor, row);
+            return (React.createElement("td", { className: styles$2.TableBodyCell, key: rowIdx + "." + columnIdx }, data));
+        }),
+        actions && React.createElement("td", { className: styles$2.TableBodyCell }))); });
+}
+function TableBody() {
+    var _a = useContext(DataTableContext), data = _a.data, columns = _a.columns, actions = _a.actions;
+    return React.createElement("tbody", null, mapColumnsToRows(columns, data, actions));
+}
+
+function TableFoot(_a) {
+    return (React.createElement("tfoot", null));
+}
+
+var css_248z$1 = ".Pagination-module_Pagination__1RwJN {\n  display: flex;\n  flex-wrap: wrap;\n  row-gap: 12px;\n  margin: 12px 0;\n  padding: 0; }\n  .Pagination-module_PaginationItem__XT5RR {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 32px;\n    height: 32px;\n    border: #e2e2e2 1px solid;\n    font-size: 12px;\n    margin: 0 6px;\n    cursor: pointer; }\n  .Pagination-module_PaginationItemActive__1-E77 {\n    background-color: #e2e2e2; }\n  .Pagination-module_PaginationItemSeparator__1L6y5 {\n    border: none; }\n  .Pagination-module_PaginationSeparator__xByMU {\n    padding: 0 20px; }\n";
+var styles$1 = {"Pagination":"Pagination-module_Pagination__1RwJN","PaginationItem":"Pagination-module_PaginationItem__XT5RR","PaginationItemActive":"Pagination-module_PaginationItemActive__1-E77","PaginationItemSeparator":"Pagination-module_PaginationItemSeparator__1L6y5","PaginationSeparator":"Pagination-module_PaginationSeparator__xByMU"};
+styleInject(css_248z$1);
+
+var range = function (start, end) {
+    return Array.from(Array(end - start + 1), function (_, i) { return i + start; });
+};
+var getPageList = function (totalPages, page, maxLength) {
+    if (maxLength < 5)
+        throw 'maxLength must be at least 5';
+    var sideWidth = maxLength < 9 ? 1 : 4;
+    var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;
+    var rightWidth = (maxLength - sideWidth * 2 - 2) >> 1;
+    if (totalPages <= maxLength) {
+        return range(1, totalPages);
+    }
+    if (page <= maxLength - sideWidth - 1 - rightWidth) {
+        return range(1, maxLength - sideWidth - 1).concat(0, range(totalPages - sideWidth + 1, totalPages));
+    }
+    if (page >= totalPages - sideWidth - 1 - rightWidth) {
+        return range(1, sideWidth).concat(0, range(totalPages - sideWidth - 1 - rightWidth - leftWidth, totalPages));
+    }
+    return range(1, sideWidth).concat(0, range(page - leftWidth, page + rightWidth), 0, range(totalPages - sideWidth + 1, totalPages));
+};
+var Pagination = function (_a) {
+    var onChange = _a.onChange, page = _a.page, pagesCount = _a.pagesCount;
+    return (React.createElement("ul", { className: styles$1.Pagination }, getPageList(pagesCount, page, 20).map(function (number) {
+        var _a;
+        return (React.createElement("li", { className: cs(styles$1.PaginationItem, (_a = {},
+                _a[styles$1.PaginationItemActive] = page === number,
+                _a[styles$1.PaginationItemSeparator] = number === 0,
+                _a)), onClick: function () { return onChange(number); }, key: number }, number ? number : '...'));
+    })));
+};
+
 var css_248z = ".DataTable-module_DataTable__3YT8h {\n  width: 100%; }\n  .DataTable-module_DataTableWrapper__gKnfU {\n    width: 100%; }\n";
 var styles = {"DataTable":"DataTable-module_DataTable__3YT8h","DataTableWrapper":"DataTable-module_DataTableWrapper__gKnfU"};
 styleInject(css_248z);
 
-function DataTable(_a) {
-    var actions = _a.actions, pagination = _a.pagination, columns = _a.columns, filters = _a.filters, provider = _a.provider;
-    return (React.createElement(Provider, { actions: actions, columns: columns, filters: filters, pagination: pagination, provider: provider },
-        React.createElement("div", { className: styles.DataTableWrapper },
-            React.createElement("table", { className: styles.DataTable },
-                React.createElement(TableHead, null),
-                React.createElement(TableBody, null),
-                React.createElement(TableFoot, null)),
-            pagination && React.createElement(Pagination, null))));
+function DataTable() {
+    var _a = useContext(DataTableContext), pagination = _a.pagination, handlers = _a.handlers;
+    return (React.createElement("div", { className: styles.DataTableWrapper },
+        React.createElement("table", { className: styles.DataTable },
+            React.createElement(TableHead, null),
+            React.createElement(TableBody, null),
+            React.createElement(TableFoot, null)),
+        pagination && (React.createElement(Pagination, { page: pagination.page, pagesCount: pagination.pagesCount, onChange: handlers.setPage }))));
 }
 
-export { DataTable };
+function index (_a) {
+    var actions = _a.actions, pagination = _a.pagination, columns = _a.columns, filters = _a.filters, provider = _a.provider;
+    return (React.createElement(Provider, { actions: actions, columns: columns, filters: filters, pagination: pagination, provider: provider },
+        React.createElement(DataTable, null)));
+}
+
+export { index as DataTable };
